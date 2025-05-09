@@ -45,56 +45,60 @@ comment-insight-analyzer/
 ```bash
 git clone https://github.com/your-username/comment-insight-analyzer.git
 cd comment-insight-analyzer
+```
 
-
-2. Frontend Setup (React + Tailwind)
-
+### 2. Frontend Setup (React + Tailwind)
+```bash
 cd frontend
 npm install
 npm run dev
+```
 
-3. Backend Setup (AdonisJS)
-
+### 3. Backend Setup (AdonisJS)
+```bash
 cd backend
 npm install
 node ace serve --watch
+```
 
-4. NLP Microservice Setup (Python)
-
+### 4. NLP Microservice Setup (Python)
+```bash
 cd nlp-service
 pip install -r requirements.txt
 uvicorn app.main:app --reload  # or: flask run
+```
 
-🧪 Workflow
-	1.	User uploads a PDF of video comments.
-	2.	Backend extracts comment text and sends it to Python NLP service.
-	3.	NLP pipeline performs:
-	•	Language detection
-	•	Spam filtering
-	•	Sentiment analysis
-	•	Topic/demand extraction
-	4.	Backend returns results to frontend.
-	5.	User views insights and can download as a PDF.
 
-⸻
+## 🧪 Workflow
+	1. User uploads a PDF of video comments.
+	2. Backend extracts comment text and sends it to Python NLP service.
+	3. NLP pipeline performs:
+		• Language detection
+		• Spam filtering
+		• Sentiment analysis
+		• Topic/demand extraction
+	4. Backend returns results to frontend.
+	5. User views insights and can download as a PDF.
 
-📌 Future Improvements
-	•	Advanced spam detection using ML models
-	•	Interactive dashboard with charts (likes, dislikes, trends)
-	•	Support for more regional languages
-	•	YouTube API integration for real-time comment fetching
+---
 
-⸻
+### 📌 Future Improvements
+	• Advanced spam detection using ML models
+	• Interactive dashboard with charts (likes, dislikes, trends)
+	• Support for more regional languages
+	• YouTube API integration for real-time comment fetching
 
-👨‍💻 Author
+---
 
-Your Name
-Your Portfolio
-LinkedIn
+## 👨‍💻 Author
 
-⸻
+	Naman Singla
+	https://namansingla-blog.netlify.app
+	https://www.linkedin.com/in/namansingla7642
 
-📄 License
+---
+
+## 📄 License
 
 This project is open-source under the MIT License.
 ---
