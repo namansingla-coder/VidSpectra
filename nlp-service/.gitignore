@@ -1,2 +1,3 @@
 venv
 finetuned_sentiment_model
+.env

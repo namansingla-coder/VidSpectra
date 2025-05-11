@@ -1,7 +1,8 @@
 import requests
 import json
+import os
 
-API_KEY = "AIzaSyApzxoo3Xg4BWHmsfeJeu5E61aKZZfugco"
+API_KEY = os.getenv('YOUTUBE_API_KEY')
 VIDEO_ID = "6B8vh41NklE"# Replace with your video ID
 
 def fetch_comments(video_id):
