@@ -15,3 +15,4 @@ router.get('/', async () => {
   }
 })
 router.post('/upload',[PdfController,'upload'])
+router.post('/analyze-youtube', [PdfController, 'analyzeYoutube'])
