@@ -1,8 +1,8 @@
 import requests
 import json
 
-API_KEY = "YOUR_YOUTUBE_API_KEY"
-VIDEO_ID = "dQw4w9WgXcQ"  # Replace with your video ID
+API_KEY = "AIzaSyApzxoo3Xg4BWHmsfeJeu5E61aKZZfugco"
+VIDEO_ID = "6B8vh41NklE"# Replace with your video ID
 
 def fetch_comments(video_id):
     comments = []
@@ -19,8 +19,7 @@ def fetch_comments(video_id):
             "textFormat": "plainText"
         }
         res = requests.get(url, params=params).json()
-        items = res.get("items", [])
-        for item in items:
+        for item in res.get("items", []):
             text = item["snippet"]["topLevelComment"]["snippet"]["textDisplay"]
             comments.append({"text": text})
 
@@ -31,7 +30,7 @@ def fetch_comments(video_id):
     return comments
 
 if __name__ == "__main__":
-    data = fetch_comments(VIDEO_ID)
+    comments = fetch_comments(VIDEO_ID)
     with open("youtube_comments_raw.json", "w") as f:
-        json.dump(data, f, indent=2)
-    print(f"Saved {len(data)} comments to youtube_comments_raw.json")
+        json.dump(comments, f, indent=2)
+    print(f"✅ Saved {len(comments)} comments")
