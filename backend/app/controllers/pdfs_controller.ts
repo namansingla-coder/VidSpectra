@@ -1,11 +1,19 @@
-import type { HttpContext } from '@adonisjs/core/http'
+import { HttpContext } from '@adonisjs/core/http'
 import app from '@adonisjs/core/services/app'
-import env from '#start/env'
 import axios from 'axios'
 import fs from 'fs'
 import path from 'path'
-
+import env from '#start/env'
 export default class PdfController {
+  private mapLabelToSentiment(label: string) {
+    const labelMap: Record<string, string> = {
+      LABEL_0: 'Negative',
+      LABEL_1: 'Neutral',
+      LABEL_2: 'Positive',
+    }
+    return labelMap[label] || label
+  }
+
   public async upload({ request, response }: HttpContext) {
     try {
       const pdfFile = request.file('file', {
@@ -31,9 +39,16 @@ export default class PdfController {
         file_path: fullFilePath,
       })
 
+      const result = nlpResponse.data
+      const label = Array.isArray(result.summary?.sentiment)
+        ? result.summary.sentiment[0].label
+        : result.summary?.sentiment
+
+      result.summary.sentiment = this.mapLabelToSentiment(label)
+
       return response.ok({
         message: 'PDF analyzed successfully',
-        result: nlpResponse.data,
+        result,
       })
     } catch (error) {
       console.error('NLP Error:', error.message)
@@ -77,9 +92,16 @@ export default class PdfController {
         raw_text: rawText,
       })
 
+      const result = nlpResponse.data
+      const label = Array.isArray(result.summary?.sentiment)
+        ? result.summary.sentiment[0].label
+        : result.summary?.sentiment
+
+      result.summary.sentiment = this.mapLabelToSentiment(label)
+
       return response.ok({
         message: 'YouTube comments analyzed successfully',
-        result: nlpResponse.data,
+        result,
       })
     } catch (error) {
       console.error('YouTube NLP Error:', error.message)
