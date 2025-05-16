@@ -1,6 +1,7 @@
 # main.py
 
 from fastapi import FastAPI, HTTPException
+from fastapi import File, UploadFile
 from pydantic import BaseModel
 import os
 from transformers import pipeline
