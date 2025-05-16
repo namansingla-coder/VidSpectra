@@ -25,7 +25,7 @@ export default function Upload() {
     setResult(null)
 
     try {
-      const res = await axios.post('http://localhost:3333/upload', formData, {
+      const res = await axios.post(`${process.env.REACT_APP_API_URL}/upload`, formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
@@ -49,7 +49,7 @@ export default function Upload() {
     setResult(null)
 
     try {
-      const res = await axios.post('http://localhost:3333/analyze-youtube', {
+      const res = await axios.post(`${process.env.REACT_APP_API_URL}/analyze-youtube`, {
         video_id: videoId,
       })
 
