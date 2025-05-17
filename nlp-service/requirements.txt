@@ -5,3 +5,5 @@ datasets
 scikit-learn
 pymupdf  # for pdf_parser.py
 gdown
+transformers
+torch
