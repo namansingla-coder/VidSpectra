@@ -25,7 +25,7 @@ export default function Upload() {
     setResult(null)
 
     try {
-      const res = await axios.post(`${process.env.REACT_APP_API_URL}/upload`, formData, {
+      const res = await axios.post('http://127.0.0.1:3333/upload', formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
@@ -49,7 +49,7 @@ export default function Upload() {
     setResult(null)
 
     try {
-      const res = await axios.post(`${process.env.REACT_APP_API_URL}/analyze-youtube`, {
+      const res = await axios.post('http://127.0.0.1:3333/analyze-youtube', {
         video_id: videoId,
       })
 
@@ -109,57 +109,59 @@ export default function Upload() {
         {result && (
           <div className="mt-10 space-y-6">
             {/* Sentiment */}
-{result.summary?.sentiment && (
-  <div className="bg-emerald-100 p-4 rounded-lg border-l-4 border-emerald-500 hover:shadow-md transition-shadow">
-    <h2 className="text-xl font-bold text-emerald-800">📊 Overall Sentiment</h2>
-    <p className="mt-1 text-lg text-gray-800">
-      {Array.isArray(result.summary.sentiment)
-        ? result.summary.sentiment[0].label.replace('LABEL_', '')
-        : result.summary.sentiment}
-    </p>
-  </div>
-)}
+            {result.summary?.sentiment && (
+              <div className="bg-emerald-100 p-4 rounded-lg border-l-4 border-emerald-500 hover:shadow-md transition-shadow">
+                <h2 className="text-xl font-bold text-emerald-800">📊 Overall Sentiment</h2>
+                <p className="mt-1 text-lg text-gray-800">
+                  {Array.isArray(result.summary.sentiment)
+                    ? result.summary.sentiment[0].label.replace('LABEL_', '')
+                    : result.summary.sentiment}
+                </p>
+              </div>
+            )}
 
-{/* Main Topic */}
-{result.summary?.topics && result.summary.topics.length > 0 && result.summary.topics[0] !== '{}' && (
-  <div className="bg-sky-100 p-4 rounded-lg border-l-4 border-sky-400 hover:shadow-md transition-shadow">
-    <h2 className="text-xl font-bold text-sky-800">🧩 Main Topic</h2>
-    <p className="mt-1 text-lg text-gray-800">{result.summary.topics.join(', ')}</p>
-  </div>
-)}
+            {/* Main Topic */}
+            {Array.isArray(result.summary?.topics) &&
+              result.summary.topics.length > 0 &&
+              result.summary.topics.some((t) => t && t !== '{}' && t.trim() !== '') && (
+                <div className="bg-sky-100 p-4 rounded-lg border-l-4 border-sky-400 hover:shadow-md transition-shadow">
+                  <h2 className="text-xl font-bold text-sky-800">🧩 Main Topic</h2>
+                  <p className="mt-1 text-lg text-gray-800">{result.summary.topics.join(', ')}</p>
+                </div>
+              )}
 
-{/* Feedback Sections with updated colors */}
-<FeedbackSection
-  title="👍 What People Loved"
-  color="indigo"
-  icon="👍"
-  items={result.summary?.feedback?.likes || []}
-  fallback="No positive feedback identified."
-/>
+            {/* Feedback Sections */}
+            <FeedbackSection
+              title="👍 What People Loved"
+              color="indigo"
+              icon="👍"
+              items={result.summary?.feedback?.likes || []}
+              fallback="No positive feedback identified."
+            />
 
-<FeedbackSection
-  title="👎 Common Criticisms"
-  color="rose"
-  icon="👎"
-  items={result.summary?.feedback?.dislikes || []}
-  fallback="No negative feedback identified."
-/>
+            <FeedbackSection
+              title="👎 Common Criticisms"
+              color="rose"
+              icon="👎"
+              items={result.summary?.feedback?.dislikes || []}
+              fallback="No negative feedback identified."
+            />
 
-<FeedbackSection
-  title="📢 What People Demanded"
-  color="amber"
-  icon="📢"
-  items={result.summary?.feedback?.demands || []}
-  fallback="No demands or suggestions found."
-/>
+            <FeedbackSection
+              title="📢 What People Demanded"
+              color="amber"
+              icon="📢"
+              items={result.summary?.feedback?.demands || []}
+              fallback="No demands or suggestions found."
+            />
 
-{/* Summary */}
-{result.summary?.text_summary && (
-  <div className="bg-yellow-100 p-4 rounded-lg border-l-4 border-yellow-500 hover:shadow-md transition-shadow">
-    <h2 className="text-xl font-bold text-yellow-800">📝 Summary</h2>
-    <p className="mt-1 text-lg text-gray-800">{result.summary.text_summary}</p>
-  </div>
-)}
+            {/* Summary */}
+            {result.summary?.text_summary && (
+              <div className="bg-yellow-100 p-4 rounded-lg border-l-4 border-yellow-500 hover:shadow-md transition-shadow">
+                <h2 className="text-xl font-bold text-yellow-800">📝 Summary</h2>
+                <p className="mt-1 text-lg text-gray-800">{result.summary.text_summary}</p>
+              </div>
+            )}
           </div>
         )}
       </div>
@@ -170,7 +172,7 @@ export default function Upload() {
 function FeedbackSection({ title, color, icon, items, fallback }) {
   return (
     <div className={`bg-${color}-100 p-4 rounded-lg border-l-4 border-${color}-500 hover:shadow-md transition-shadow`}>
-      <h3 className="text-lg font-bold text-${color}-800">
+      <h3 className={`text-lg font-bold text-${color}-800`}>
         {icon} {title}
       </h3>
       <ul className="mt-2">
