@@ -35,7 +35,7 @@ export default class PdfController {
       await pdfFile.move(uploadPath, { name: fileName, overwrite: true })
       const fullFilePath = path.join(uploadPath, fileName)
 
-      const nlpResponse = await axios.post('http://0.0.0.0:10000/analyze', {
+      const nlpResponse = await axios.post('http://127.0.0.1:8000/analyze', {
         file_path: fullFilePath,
       })
 
@@ -88,7 +88,7 @@ export default class PdfController {
 
       const rawText = comments.join('\n')
 
-      const nlpResponse = await axios.post('http://0.0.0.0:10000/analyze-text', {
+      const nlpResponse = await axios.post('http://127.0.0.1:8000/analyze-text', {
         raw_text: rawText,
       })
 

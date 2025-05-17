@@ -64,6 +64,9 @@ node ace serve --watch
 ### 4. NLP Microservice Setup (Python)
 ```bash
 cd nlp-service
+python3 -m venv venv
+source venv/bin/activate # On macOS / Linux 
+venv\Scripts\activate.bat # On Windows
 pip install -r requirements.txt
 uvicorn app.main:app --reload  # or: flask run
 ```
